@@ -1,9 +1,6 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
-import {
-  MapComponentProps,
-  MapProviderContextProvider,
-} from './MapProviderContext';
+import { MapComponentProps, MapProviderContextProvider } from './MapProviderContext';
 
 const DEFAULT_CENTER = { lat: 40.4168, lng: -3.7038 };
 const DEFAULT_ZOOM = 5;

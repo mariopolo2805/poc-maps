@@ -1,8 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react';
-import {
-  MapComponentProps,
-  MapProviderContextProvider,
-} from './MapProviderContext';
+import { MapComponentProps, MapProviderContextProvider } from './MapProviderContext';
 
 // Superficie provisional que permite probar la orquestación sin SDK real de Baidu.
 const BaiduPlaceholderSurface = ({ className }: MapComponentProps) => (
@@ -33,7 +30,9 @@ export const BaiduMapsProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   return (
-    <MapProviderContextProvider value={{ providerKey: 'baidu', MapComponent: BaiduPlaceholderSurface }}>
+    <MapProviderContextProvider
+      value={{ providerKey: 'baidu', MapComponent: BaiduPlaceholderSurface }}
+    >
       {children}
     </MapProviderContextProvider>
   );

@@ -11,9 +11,10 @@ const DEFAULT_ZOOM = 5;
 export const MapContainer = ({ providerKey }: MapContainerProps) => {
   const { MapComponent } = useMapProviderContext();
   // Preparamos un título amigable para identificar el proveedor activo en la UI.
-  const title = useMemo(() => (providerKey === 'baidu' ? 'Baidu Maps (stub)' : 'Google Maps'), [
-    providerKey,
-  ]);
+  const title = useMemo(
+    () => (providerKey === 'baidu' ? 'Baidu Maps (stub)' : 'Google Maps'),
+    [providerKey],
+  );
 
   return (
     <section
