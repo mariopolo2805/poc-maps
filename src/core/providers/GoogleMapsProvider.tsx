@@ -1,27 +1,58 @@
 import { PropsWithChildren, useEffect } from 'react';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
-import { MapComponentProps, MapProviderContextProvider } from './MapProviderContext';
+import {
+  APIProvider,
+  Map,
+  MapCameraChangedEvent,
+  AdvancedMarker,
+  Pin,
+} from '@vis.gl/react-google-maps';
+import {
+  MapComponentProps,
+  MapMarkerProps,
+  MapProviderContextProvider,
+} from './MapProviderContext';
+import './GoogleMapsProvider.scss';
 
-const DEFAULT_CENTER = { lat: 40.4168, lng: -3.7038 };
-const DEFAULT_ZOOM = 5;
+const mapId = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID;
+if (!mapId) {
+  throw new Error(
+    '[GoogleMapsProvider] Google Map ID is missing. Please set VITE_GOOGLE_MAPS_MAP_ID in your .env file.',
+  );
+}
 
 // Renderiza el componente Map de @vis.gl/react-google-maps con estilos responsive.
 const GoogleMapSurface = ({
   className,
-  center = DEFAULT_CENTER,
-  zoom = DEFAULT_ZOOM,
+  center,
+  zoom,
   children,
+  onCameraChanged,
 }: MapComponentProps) => (
-  <div className={className} style={{ width: '100%', height: '100%' }}>
-    <Map defaultCenter={center} defaultZoom={zoom} style={{ width: '100%', height: '100%' }}>
+  <div className={['google-map-surface', className].filter(Boolean).join(' ')}>
+    <Map
+      center={center}
+      zoom={zoom}
+      mapId={mapId}
+      className="google-map-surface__canvas"
+      onCameraChanged={(ev: MapCameraChangedEvent) => {
+        const position = { center: ev.detail.center, zoom: ev.detail.zoom };
+        onCameraChanged?.(position);
+      }}
+    >
       {children}
     </Map>
   </div>
 );
 
+const GoogleMarker = ({ position, onClick, label, children }: MapMarkerProps) => (
+  <AdvancedMarker position={position} onClick={onClick} title={label}>
+    {children ?? <Pin background="#2563eb" glyphColor="#ffffff" borderColor="#1d4ed8" />}
+  </AdvancedMarker>
+);
+
 const warnMissingKey = (apiKey?: string) => {
   if (!apiKey) {
-    console.warn(
+    throw new Error(
       '[GoogleMapsProvider] No API key was supplied. Provide VITE_GOOGLE_MAPS_API_KEY or pass apiKey prop.',
     );
   }
@@ -29,6 +60,7 @@ const warnMissingKey = (apiKey?: string) => {
 
 export type GoogleMapsProviderProps = PropsWithChildren<{
   apiKey?: string;
+  mapId?: string;
 }>;
 
 export const GoogleMapsProvider = ({ apiKey, children }: GoogleMapsProviderProps) => {
@@ -41,7 +73,13 @@ export const GoogleMapsProvider = ({ apiKey, children }: GoogleMapsProviderProps
 
   return (
     <APIProvider apiKey={resolvedKey ?? ''}>
-      <MapProviderContextProvider value={{ providerKey: 'google', MapComponent: GoogleMapSurface }}>
+      <MapProviderContextProvider
+        value={{
+          providerKey: 'google',
+          MapComponent: GoogleMapSurface,
+          primitives: { Marker: GoogleMarker },
+        }}
+      >
         {children}
       </MapProviderContextProvider>
     </APIProvider>

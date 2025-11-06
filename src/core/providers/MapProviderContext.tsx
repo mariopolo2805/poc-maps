@@ -5,11 +5,24 @@ export type MapComponentProps = {
   children?: ReactNode;
   center?: { lat: number; lng: number };
   zoom?: number;
+  onCameraChanged?: (position: { center: { lat: number; lng: number }; zoom: number }) => void;
+};
+
+export type MapMarkerProps = {
+  position: { lat: number; lng: number };
+  label?: string;
+  onClick?: () => void;
+  children?: ReactNode;
+};
+
+export type MapProviderPrimitives = {
+  Marker: ComponentType<MapMarkerProps>;
 };
 
 export type MapProviderContextValue = {
   providerKey: 'google' | 'baidu';
   MapComponent: ComponentType<MapComponentProps>;
+  primitives: MapProviderPrimitives;
 };
 
 // Contexto compartido que expone los primitivos del provider activo.

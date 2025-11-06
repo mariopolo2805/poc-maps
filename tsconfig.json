@@ -16,7 +16,14 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "baseUrl": "src",
+    "paths": {
+      "@models": ["models"],
+      "@models/*": ["models/*"],
+      "@db": ["db"],
+      "@db/*": ["db/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

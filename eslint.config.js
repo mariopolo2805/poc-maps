@@ -41,5 +41,17 @@ export default tseslint.config(
       'prettier/prettier': 'warn'
     }
   },
+  {
+    files: ['vite.config.ts'],
+    languageOptions: {
+      parserOptions: {
+        project: './tsconfig.node.json',
+        tsconfigRootDir: import.meta.dirname
+      },
+      globals: {
+        ...globals.node
+      }
+    }
+  },
   prettierConfig
 );
