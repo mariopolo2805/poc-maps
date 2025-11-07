@@ -7,6 +7,7 @@ import { POI } from '@models';
 const App = () => {
   const { MapProvider, plugin } = useMapProvider();
 
+  /* POC Handlers */
   const handleCameraChanged = useCallback((data: { lat: number; lng: number; zoom: number }) => {
     console.log('[POC] (onCameraChanged): 🎥', {
       lat: data.lat,
@@ -47,7 +48,7 @@ const App = () => {
         onMapClick={handleMapClick}
         onIdle={handleOnIdle}
       >
-        <Map.POILayer pois={pois} onPoiClick={handlePoiClick} />
+        <Map.POILayer pois={pois} onPoiClick={handlePoiClick} clustering />
       </Map.Container>
     </MapProvider>
   );

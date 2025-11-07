@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import {
   APIProvider,
   Map,
@@ -12,9 +12,14 @@ import {
   MapInfoWindowProps,
   MapMarkerProps,
   MapProviderContextProvider,
+  useMapProviderContext,
 } from '../MapProviderContext';
 import './GoogleMapsProvider.scss';
 import { TypeColors } from '@models';
+import {
+  GoogleMapsClusterProvider,
+  useGoogleMapsCluster,
+} from '@providers/Google/Cluster/GoogleMapsClusterContext';
 
 const mapId = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID;
 if (!mapId) {
@@ -56,16 +61,26 @@ const GoogleInfoWindow = ({
         onIdle?.(ev.type);
       }}
     >
-      {children}
+      <GoogleMapsClusterProvider>{children}</GoogleMapsClusterProvider>
     </Map>
   </div>
 );
 
-const GoogleMarker = ({ position, onClick, label, type, children }: MapMarkerProps) => {
+const GoogleMarker = ({ id, position, onClick, label, type, children }: MapMarkerProps) => {
   const pinProps = TypeColors[type] || TypeColors.store;
+  const { setMarkerRef } = useGoogleMapsCluster();
+
+  const {
+    enableClustering: { isEnableClustering },
+  } = useMapProviderContext();
 
   return (
-    <AdvancedMarker position={position} onClick={onClick} title={label}>
+    <AdvancedMarker
+      position={position}
+      onClick={onClick}
+      title={label}
+      {...(isEnableClustering ? { ref: (marker) => setMarkerRef(marker, id?.toString()) } : {})}
+    >
       {children ?? <Pin {...pinProps} />}
     </AdvancedMarker>
   );
@@ -85,6 +100,7 @@ export type GoogleMapsProviderProps = PropsWithChildren<{
 }>;
 
 export const GoogleMapsProvider = ({ apiKey, children }: GoogleMapsProviderProps) => {
+  const [isEnableClustering, setIsEnableClustering] = useState(false);
   const resolvedKey = apiKey ?? import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
@@ -99,6 +115,10 @@ export const GoogleMapsProvider = ({ apiKey, children }: GoogleMapsProviderProps
           Primitives: {
             Marker: GoogleMarker,
             InfoWindow: GoogleInfoWindow,
+          },
+          enableClustering: {
+            isEnableClustering,
+            setIsEnableClustering,
           },
         }}
       >

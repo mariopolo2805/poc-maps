@@ -11,6 +11,7 @@ export type MapInfoWindowProps = {
 };
 
 export type MapMarkerProps = {
+  id: string | number;
   position: { lat: number; lng: number };
   label?: string;
   type: 'store' | 'dropPoint';
@@ -25,6 +26,10 @@ export type MapProviderPrimitives = {
 
 export type MapProviderContextValue = {
   plugin: 'google' | 'baidu';
+  enableClustering: {
+    isEnableClustering: boolean;
+    setIsEnableClustering: (value: boolean) => void;
+  };
   Primitives: MapProviderPrimitives;
 };
 

@@ -106,6 +106,13 @@ const pois: POI[] = [
     type: 'dropPoint',
     label: 'Drop Point CC Artea Parque Bilbao',
   },
+  {
+    id: 'drop_cc_granCasa_zaragoza',
+    lat: 41.6561,
+    lng: -0.8773,
+    type: 'dropPoint',
+    label: 'Drop Point CC Gran Casa Zaragoza',
+  },
 ];
 
 export { pois };
