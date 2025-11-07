@@ -1,11 +1,15 @@
 import { useMemo } from 'react';
-import { useMapProviderContext } from '../../../core/providers/MapProviderContext';
-import { PoiMarkersProps } from '@models';
+import { useMapProviderContext } from '@providers/MapProviderContext';
+import { POI } from '@models';
 
-// Renderiza una capa de marcadores independiente del provider activo.
-export const PoiMarkers = ({ pois, onPoiClick }: PoiMarkersProps) => {
+type POILayerProps = {
+  pois: POI[];
+  onPoiClick?: (poi: POI) => void;
+};
+
+export const POILayer = ({ pois, onPoiClick }: POILayerProps) => {
   const {
-    primitives: { Marker },
+    Primitives: { Marker },
   } = useMapProviderContext();
 
   const items = useMemo(() => pois, [pois]);
@@ -16,7 +20,8 @@ export const PoiMarkers = ({ pois, onPoiClick }: PoiMarkersProps) => {
         <Marker
           key={poi.id}
           position={{ lat: poi.lat, lng: poi.lng }}
-          label={poi.title}
+          label={poi.label}
+          type={poi.type}
           onClick={() => onPoiClick?.(poi)}
         />
       ))}

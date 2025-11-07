@@ -9,8 +9,8 @@ El resultado servirá como referencia técnica y aprendizaje para el desarrollo 
 - [x] El desarrollador debe crear o usar un proyecto en Google Cloud y generar una API Key para Maps JS, restringiéndola por dominio y habilitando solo las APIs necesarias (Maps JavaScript API y Places API si aplica).
 - [x] Se debe crear un entorno React ligero, por ejemplo con Vite o Create React App, que cargue el mapa centrado por las propiedades center (lat/lng) y zoom.
 - [x] El mapa debe renderizar una lista de marcadores dinámicos con id, lat, lng y title.
-- [ ] Debe manejar los eventos básicos onMapClick (devuelve coordenadas), onMarkerClick (devuelve id del marcador) y onIdle (devuelve bounds y zoom actuales).
-- [ ] El componente debe permitir re-centrar el mapa de forma controlada cuando cambie la propiedad center.
+- [x] Debe manejar los eventos básicos onMapClick (devuelve coordenadas), onMarkerClick (devuelve id del marcador) y onIdle (devuelve bounds y zoom actuales).
+- [x] El componente debe permitir re-centrar el mapa de forma controlada cuando cambie la propiedad center.
 
 ## PROPS Y EVENTOS ESPERADOS (borrador para CDS futuro)
 

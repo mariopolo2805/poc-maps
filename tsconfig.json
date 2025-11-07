@@ -22,7 +22,11 @@
       "@models": ["models"],
       "@models/*": ["models/*"],
       "@db": ["db"],
-      "@db/*": ["db/*"]
+      "@db/*": ["db/*"],
+      "@providers": ["core/providers"],
+      "@providers/*": ["core/providers/*"],
+      "@features": ["features"],
+      "@features/*": ["features/*"]
     }
   },
   "include": ["src"],

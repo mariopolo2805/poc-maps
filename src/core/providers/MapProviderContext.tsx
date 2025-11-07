@@ -1,31 +1,33 @@
 import { ComponentType, PropsWithChildren, ReactNode, createContext, useContext } from 'react';
 
-export type MapComponentProps = {
+export type MapInfoWindowProps = {
   className?: string;
   children?: ReactNode;
   center?: { lat: number; lng: number };
   zoom?: number;
-  onCameraChanged?: (position: { center: { lat: number; lng: number }; zoom: number }) => void;
+  onCameraChanged?: (data: { center: { lat: number; lng: number }; zoom: number }) => void;
+  onClick?: (data: { latLng: { lat: number; lng: number }; placeId: string | null }) => void;
+  onIdle?: (data: string) => void;
 };
 
 export type MapMarkerProps = {
   position: { lat: number; lng: number };
   label?: string;
+  type: 'store' | 'dropPoint';
   onClick?: () => void;
   children?: ReactNode;
 };
 
 export type MapProviderPrimitives = {
   Marker: ComponentType<MapMarkerProps>;
+  InfoWindow: ComponentType<MapInfoWindowProps>;
 };
 
 export type MapProviderContextValue = {
-  providerKey: 'google' | 'baidu';
-  MapComponent: ComponentType<MapComponentProps>;
-  primitives: MapProviderPrimitives;
+  plugin: 'google' | 'baidu';
+  Primitives: MapProviderPrimitives;
 };
 
-// Contexto compartido que expone los primitivos del provider activo.
 const MapProviderContext = createContext<MapProviderContextValue | null>(null);
 
 export type MapProviderComponent = ComponentType<PropsWithChildren>;

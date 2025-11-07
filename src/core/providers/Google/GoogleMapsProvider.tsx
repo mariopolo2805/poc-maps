@@ -5,13 +5,16 @@ import {
   MapCameraChangedEvent,
   AdvancedMarker,
   Pin,
+  MapMouseEvent,
+  MapEvent,
 } from '@vis.gl/react-google-maps';
 import {
-  MapComponentProps,
+  MapInfoWindowProps,
   MapMarkerProps,
   MapProviderContextProvider,
-} from './MapProviderContext';
+} from '../MapProviderContext';
 import './GoogleMapsProvider.scss';
+import { TypeColors } from '@models';
 
 const mapId = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID;
 if (!mapId) {
@@ -20,14 +23,15 @@ if (!mapId) {
   );
 }
 
-// Renderiza el componente Map de @vis.gl/react-google-maps con estilos responsive.
-const GoogleMapSurface = ({
+const GoogleInfoWindow = ({
   className,
   center,
   zoom,
   children,
   onCameraChanged,
-}: MapComponentProps) => (
+  onClick,
+  onIdle,
+}: MapInfoWindowProps) => (
   <div className={['google-map-surface', className].filter(Boolean).join(' ')}>
     <Map
       center={center}
@@ -35,8 +39,21 @@ const GoogleMapSurface = ({
       mapId={mapId}
       className="google-map-surface__canvas"
       onCameraChanged={(ev: MapCameraChangedEvent) => {
-        const position = { center: ev.detail.center, zoom: ev.detail.zoom };
-        onCameraChanged?.(position);
+        const data = {
+          center: ev.detail.center,
+          zoom: ev.detail.zoom,
+        };
+        onCameraChanged?.(data);
+      }}
+      onClick={(ev: MapMouseEvent) => {
+        const data = {
+          latLng: ev.detail.latLng,
+          placeId: ev.detail.placeId,
+        };
+        onClick?.(data);
+      }}
+      onIdle={(ev: MapEvent) => {
+        onIdle?.(ev.type);
       }}
     >
       {children}
@@ -44,11 +61,15 @@ const GoogleMapSurface = ({
   </div>
 );
 
-const GoogleMarker = ({ position, onClick, label, children }: MapMarkerProps) => (
-  <AdvancedMarker position={position} onClick={onClick} title={label}>
-    {children ?? <Pin background="#2563eb" glyphColor="#ffffff" borderColor="#1d4ed8" />}
-  </AdvancedMarker>
-);
+const GoogleMarker = ({ position, onClick, label, type, children }: MapMarkerProps) => {
+  const pinProps = TypeColors[type] || TypeColors.store;
+
+  return (
+    <AdvancedMarker position={position} onClick={onClick} title={label}>
+      {children ?? <Pin {...pinProps} />}
+    </AdvancedMarker>
+  );
+};
 
 const warnMissingKey = (apiKey?: string) => {
   if (!apiKey) {
@@ -66,7 +87,6 @@ export type GoogleMapsProviderProps = PropsWithChildren<{
 export const GoogleMapsProvider = ({ apiKey, children }: GoogleMapsProviderProps) => {
   const resolvedKey = apiKey ?? import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-  // Avisamos en desarrollo si falta la API key para evitar sorpresas en tiempo de ejecución.
   useEffect(() => {
     warnMissingKey(resolvedKey);
   }, [resolvedKey]);
@@ -75,9 +95,11 @@ export const GoogleMapsProvider = ({ apiKey, children }: GoogleMapsProviderProps
     <APIProvider apiKey={resolvedKey ?? ''}>
       <MapProviderContextProvider
         value={{
-          providerKey: 'google',
-          MapComponent: GoogleMapSurface,
-          primitives: { Marker: GoogleMarker },
+          plugin: 'google',
+          Primitives: {
+            Marker: GoogleMarker,
+            InfoWindow: GoogleInfoWindow,
+          },
         }}
       >
         {children}

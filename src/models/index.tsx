@@ -1,13 +1,30 @@
-type Poi = {
-  id: string;
+type POI = {
+  id: string | number;
+  type: 'store' | 'dropPoint';
   lat: number;
   lng: number;
-  title?: string;
+  label?: string;
+  company?: string;
+  iconDefaultUrl?: string;
+  iconSelectedUrl?: string;
+  iconComponent?: React.ReactNode; // takes priority over URLs
 };
 
-type PoiMarkersProps = {
-  pois: Poi[];
-  onPoiClick?: (poi: Poi) => void;
+// type MapSettings = {
+//   viewType?: 'roadmap' | 'satellite' | 'hybrid' | 'terrain';
+//   controls?: {
+//     mapType?: boolean;
+//     fullscreen?: boolean;
+//     zoom?: boolean;
+//     streetView?: boolean;
+//     pan?: boolean;
+//   };
+// };
+
+export const TypeColors = {
+  store: { background: '#2563eb', glyphColor: '#ffffff', borderColor: '#1d4ed8' },
+  dropPoint: { background: '#dc2626', glyphColor: '#fff', borderColor: '#b91c1c' },
 };
 
-export type { Poi, PoiMarkersProps };
+export type { POI };
+// export type { POI, MapSettings };

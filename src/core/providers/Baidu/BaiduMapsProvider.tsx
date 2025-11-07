@@ -1,15 +1,12 @@
 import { PropsWithChildren, useEffect } from 'react';
 import {
-  MapComponentProps,
+  MapInfoWindowProps,
   MapMarkerProps,
   MapProviderContextProvider,
-} from './MapProviderContext';
+} from '../MapProviderContext';
 import './BaiduMapsProvider.scss';
 
-// Superficie provisional que permite probar la orquestación sin SDK real de Baidu.
-const BaiduPlaceholderSurface = ({ className, onCameraChanged, children }: MapComponentProps) => {
-  void onCameraChanged;
-
+const BaiduPlaceholderInfoWindow = ({ className, children }: MapInfoWindowProps) => {
   return (
     <div className={['baidu-map-placeholder', className].filter(Boolean).join(' ')}>
       <p className="baidu-map-placeholder__message">
@@ -33,9 +30,11 @@ export const BaiduMapsProvider = ({ children }: PropsWithChildren) => {
   return (
     <MapProviderContextProvider
       value={{
-        providerKey: 'baidu',
-        MapComponent: BaiduPlaceholderSurface,
-        primitives: { Marker: BaiduPlaceholderMarker },
+        plugin: 'baidu',
+        Primitives: {
+          Marker: BaiduPlaceholderMarker,
+          InfoWindow: BaiduPlaceholderInfoWindow,
+        },
       }}
     >
       {children}
