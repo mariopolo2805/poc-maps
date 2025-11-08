@@ -3,5 +3,9 @@
 - Add docs
   - Add info .env
   - Add info about queryParam
-- Add clusters
-- 
+
+- DONE Add clusters
+- DONE selectedPOIId
+
+- User geolocation
+- Map bounds restriction

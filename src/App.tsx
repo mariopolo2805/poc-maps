@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useMapProvider } from './core/hooks/useMapProvider';
 import { Map } from './features/Map';
 import { pois } from '@db';
@@ -6,6 +6,7 @@ import { POI } from '@models';
 
 const App = () => {
   const { MapProvider, plugin } = useMapProvider();
+  const [selectedPOI, setSelectedPOI] = useState<POI | null>(null);
 
   /* POC Handlers */
   const handleCameraChanged = useCallback((data: { lat: number; lng: number; zoom: number }) => {
@@ -32,6 +33,7 @@ const App = () => {
       lat: data.lat,
       lng: data.lng,
     });
+    setSelectedPOI(data);
   }, []);
 
   const handleOnIdle = useCallback((data: string) => {
@@ -39,18 +41,21 @@ const App = () => {
   }, []);
 
   return (
-    <MapProvider>
-      <Map.Container
-        plugin={plugin}
-        initialCenter={{ lat: 40.4, lng: -3.7 }}
-        initialZoom={6}
-        onCameraChanged={handleCameraChanged}
-        onMapClick={handleMapClick}
-        onIdle={handleOnIdle}
-      >
-        <Map.POILayer pois={pois} onPoiClick={handlePoiClick} clustering />
-      </Map.Container>
-    </MapProvider>
+    <>
+      <span className="selected-poi">Selected POI ID: {selectedPOI?.id || 'N/A'}</span>
+      <MapProvider>
+        <Map.Container
+          plugin={plugin}
+          initialCenter={{ lat: 40.4, lng: -3.7 }}
+          initialZoom={6}
+          onCameraChanged={handleCameraChanged}
+          onMapClick={handleMapClick}
+          onIdle={handleOnIdle}
+        >
+          <Map.POILayer pois={pois} onPoiClick={handlePoiClick} clustering />
+        </Map.Container>
+      </MapProvider>
+    </>
   );
 };
 
