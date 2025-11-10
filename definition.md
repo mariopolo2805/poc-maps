@@ -26,14 +26,14 @@ También se deben incluir notas de accesibilidad, como fallback si el mapa no ca
 
 ## DEFINITION OF DONE
 
-- [ ] El playground React debe ser ejecutable (npm start o pnpm dev).
-- [ ] El mapa debe ser visible y permitir controlar center y zoom.
-- [ ] La lista de marcadores debe renderizarse dinámicamente.
-- [ ] Los eventos onMapClick, onMarkerClick y onIdle deben funcionar correctamente.
-- [ ] El mapa debe re-centrarse de forma reactiva al actualizar la propiedad center.
-- [ ] Debe existir un README con pasos para crear la API Key, props y eventos definidos, y próximos pasos.
-- [ ] Debe incluirse una captura o GIF demostrativo del POC.
-- [ ] Se debe generar una lista de decisiones y dudas abierta para el diseño final del CDS Maps.
+- [x] El playground React debe ser ejecutable (npm start o pnpm dev).
+- [x] El mapa debe ser visible y permitir controlar center y zoom.
+- [x] La lista de marcadores debe renderizarse dinámicamente.
+- [x] Los eventos onMapClick, onMarkerClick y onIdle deben funcionar correctamente.
+- [x] El mapa debe re-centrarse de forma reactiva al actualizar la propiedad center.
+- [x] Debe existir un README con pasos para crear la API Key, props y eventos definidos, y próximos pasos.
+- [x] Debe incluirse una captura o GIF demostrativo del POC.
+- [x] Se debe generar una lista de decisiones y dudas abierta para el diseño final del CDS Maps.
 
 ## DOCUMENTACIÓN DE REFERENCIA{}
 

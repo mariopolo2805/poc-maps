@@ -11,12 +11,12 @@ type POILayerProps = {
 export const POILayer = ({ pois, onPoiClick, clustering }: POILayerProps) => {
   const {
     Primitives: { Marker },
-    enableClustering: { setIsEnableClustering },
+    enableClustering,
   } = useMapProviderContext();
 
   useMemo(() => {
-    setIsEnableClustering?.(!!clustering);
-  }, [clustering, setIsEnableClustering]);
+    enableClustering?.setIsEnableClustering?.(!!clustering);
+  }, [clustering, enableClustering]);
 
   const items = useMemo(() => pois, [pois]);
 

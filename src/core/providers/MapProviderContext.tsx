@@ -26,7 +26,7 @@ export type MapProviderPrimitives = {
 
 export type MapProviderContextValue = {
   plugin: 'google' | 'baidu';
-  enableClustering: {
+  enableClustering?: {
     isEnableClustering: boolean;
     setIsEnableClustering: (value: boolean) => void;
   };

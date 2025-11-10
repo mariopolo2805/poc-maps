@@ -8,7 +8,7 @@ const App = () => {
   const { MapProvider, plugin } = useMapProvider();
   const [selectedPOI, setSelectedPOI] = useState<POI | null>(null);
 
-  /* POC Handlers */
+  // Container events
   const handleCameraChanged = useCallback((data: { lat: number; lng: number; zoom: number }) => {
     console.log('[POC] (onCameraChanged): 🎥', {
       lat: data.lat,
@@ -28,16 +28,17 @@ const App = () => {
     [],
   );
 
+  const handleOnIdle = useCallback((data: string) => {
+    console.log('[POC] (onIdle): 💤', { data });
+  }, []);
+
+  // POILayer events
   const handlePoiClick = useCallback((data: POI) => {
     console.log(`[POC] (onPoiClick): 📍 ${data.label}`, {
       lat: data.lat,
       lng: data.lng,
     });
     setSelectedPOI(data);
-  }, []);
-
-  const handleOnIdle = useCallback((data: string) => {
-    console.log('[POC] (onIdle): 💤', { data });
   }, []);
 
   return (
