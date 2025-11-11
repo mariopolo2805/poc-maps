@@ -1,12 +1,13 @@
-import { POI } from '@models';
+import { STORE_ICON_URL, DROPPOINT_ICON_URL, POI } from '@models';
 
-const pois: POI[] = [
+const spainPois: POI[] = [
   {
     id: 'oysho_madrid_granVia33',
     lat: 40.4200673,
     lng: -3.7041583,
     type: 'store',
     label: 'Oysho Madrid Gran Vía 33',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_barcelona_passeigDeGracia13',
@@ -14,6 +15,7 @@ const pois: POI[] = [
     lng: 2.162,
     type: 'store',
     label: 'Oysho Barcelona Passeig de Gracia 13',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_barcelona_pelai40',
@@ -21,6 +23,7 @@ const pois: POI[] = [
     lng: 2.171,
     type: 'store',
     label: 'Oysho Barcelona Pelai 40',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_madrid_hermosilla16',
@@ -28,6 +31,7 @@ const pois: POI[] = [
     lng: -3.7040823,
     type: 'store',
     label: 'Oysho Madrid Hermosilla 16',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_madrid_goya65',
@@ -35,6 +39,7 @@ const pois: POI[] = [
     lng: -3.683,
     type: 'store',
     label: 'Oysho Madrid Goya 65',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_valencia_colon10',
@@ -42,6 +47,7 @@ const pois: POI[] = [
     lng: -0.3763,
     type: 'store',
     label: 'Oysho Valencia Colón 10',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_bilbao_granvia31',
@@ -49,6 +55,7 @@ const pois: POI[] = [
     lng: -2.935,
     type: 'store',
     label: 'Oysho Bilbao Gran Vía 31',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_sevilla_luisDeMorales3',
@@ -56,6 +63,7 @@ const pois: POI[] = [
     lng: -5.984,
     type: 'store',
     label: 'Oysho Sevilla Luis de Morales 3',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_aCoruna_plazaDeLugo14',
@@ -63,6 +71,7 @@ const pois: POI[] = [
     lng: -8.4115,
     type: 'store',
     label: 'Oysho A Coruña Plaza de Lugo 14',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'oysho_valladolid_calleSantiago25',
@@ -70,6 +79,7 @@ const pois: POI[] = [
     lng: -4.7245,
     type: 'store',
     label: 'Oysho Valladolid Calle Santiago 25',
+    iconDefaultUrl: STORE_ICON_URL,
   },
   {
     id: 'drop_rocaMadrid_parqueSur',
@@ -77,6 +87,7 @@ const pois: POI[] = [
     lng: -3.701,
     type: 'dropPoint',
     label: 'Drop Point Roca Madrid Parque Sur',
+    iconDefaultUrl: DROPPOINT_ICON_URL,
   },
   {
     id: 'drop_cc_nouCentro_valencia',
@@ -84,6 +95,7 @@ const pois: POI[] = [
     lng: -0.395,
     type: 'dropPoint',
     label: 'Drop Point CC Nou Centro Valencia',
+    iconDefaultUrl: DROPPOINT_ICON_URL,
   },
   {
     id: 'drop_cc_lagoh_sevilla',
@@ -91,6 +103,7 @@ const pois: POI[] = [
     lng: -5.995,
     type: 'dropPoint',
     label: 'Drop Point CC Lagoh Sevilla',
+    iconDefaultUrl: DROPPOINT_ICON_URL,
   },
   {
     id: 'drop_cc_europa_barcelona',
@@ -98,6 +111,7 @@ const pois: POI[] = [
     lng: 2.191,
     type: 'dropPoint',
     label: 'Drop Point CC Europa Barcelona',
+    iconDefaultUrl: DROPPOINT_ICON_URL,
   },
   {
     id: 'drop_cc_artea_parque_bilbao',
@@ -105,6 +119,7 @@ const pois: POI[] = [
     lng: -2.923,
     type: 'dropPoint',
     label: 'Drop Point CC Artea Parque Bilbao',
+    iconDefaultUrl: DROPPOINT_ICON_URL,
   },
   {
     id: 'drop_cc_granCasa_zaragoza',
@@ -112,7 +127,67 @@ const pois: POI[] = [
     lng: -0.8773,
     type: 'dropPoint',
     label: 'Drop Point CC Gran Casa Zaragoza',
+    iconDefaultUrl: DROPPOINT_ICON_URL,
   },
 ];
 
-export { pois };
+const francePois: POI[] = [
+  {
+    id: 'oysho_paris_champsElysees50',
+    lat: 48.8698,
+    lng: 2.3075,
+    type: 'store',
+    label: 'Oysho Paris Champs-Élysées 50',
+  },
+  {
+    id: 'oysho_lyon_rueDeLaRepublique10',
+    lat: 45.7597,
+    lng: 4.8357,
+    type: 'store',
+    label: 'Oysho Lyon Rue de la République 10',
+  },
+  {
+    id: 'drop_cc_lesQuatreTemps_paris',
+    lat: 48.8924,
+    lng: 2.236,
+    type: 'dropPoint',
+    label: 'Drop Point CC Les Quatre Temps Paris',
+  },
+  {
+    id: 'drop_cc_villenave_dOrnon_bordeaux',
+    lat: 44.799,
+    lng: -0.601,
+    type: 'dropPoint',
+    label: "Drop Point CC Villenave d'Ornon Bordeaux",
+  },
+  {
+    id: 'drop_cc_bordeaux_merignac',
+    lat: 44.8378,
+    lng: -0.576,
+    type: 'dropPoint',
+    label: 'Drop Point CC Bordeaux Mérignac',
+  },
+  {
+    id: 'oysho_marseille_rueSaintFerréol25',
+    lat: 43.2965,
+    lng: 5.3698,
+    type: 'store',
+    label: 'Oysho Marseille Rue Saint-Ferréol 25',
+  },
+  {
+    id: 'oysho_nice_avenueJeanMedecin5',
+    lat: 43.7034,
+    lng: 7.2663,
+    type: 'store',
+    label: 'Oysho Nice Avenue Jean Médecin 5',
+  },
+  {
+    id: 'drop_cc_nantes_heron',
+    lat: 47.2184,
+    lng: -1.5536,
+    type: 'dropPoint',
+    label: 'Drop Point CC Nantes Héron',
+  },
+];
+
+export { spainPois, francePois };

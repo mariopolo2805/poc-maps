@@ -1,14 +1,16 @@
-import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useMapProviderContext } from '@providers/MapProviderContext';
 import { FormComponent } from '@features/Form';
 import './MapContainer.scss';
 
+const DEFAULT_ZOOM = 6;
+
 type MapContainerProps = {
   plugin: 'google' | 'baidu';
   initialCenter: { lat: number; lng: number };
-  initialZoom: number;
-  onCameraChanged: (data: { lat: number; lng: number; zoom: number }) => void;
-  onMapClick: (data: { lat: number; lng: number; placeId: string | null }) => void;
+  initialZoom?: number;
+  onCameraChanged?: (data: { lat: number; lng: number; zoom: number }) => void;
+  onMapClick?: (data: { lat: number; lng: number; placeId: string | null }) => void;
   onIdle?: (data: string) => void;
   children?: React.ReactNode;
 };
@@ -30,9 +32,14 @@ export const MapContainer = ({
   const [error, setError] = useState<string | null>(null);
   /* Map state */
   const [mapCenter, setMapCenter] = useState(initialCenter);
-  const [zoom, setZoom] = useState(initialZoom);
+  const [zoom, setZoom] = useState(initialZoom || DEFAULT_ZOOM);
 
   const title = useMemo(() => (plugin === 'baidu' ? 'Baidu Maps (stub)' : 'Google Maps'), [plugin]);
+
+  useEffect(() => {
+    setMapCenter(initialCenter);
+    setZoom(initialZoom || DEFAULT_ZOOM);
+  }, [initialCenter]);
 
   /* Form handlers */
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -83,14 +90,14 @@ export const MapContainer = ({
       setLatInput(center.lat.toFixed(6));
       setLngInput(center.lng.toFixed(6));
       setZoom((prev) => (prev === nextZoom ? prev : Number.parseFloat(nextZoom.toFixed(2))));
-      onCameraChanged({ lat: center.lat, lng: center.lng, zoom: nextZoom });
+      onCameraChanged?.({ lat: center.lat, lng: center.lng, zoom: nextZoom });
     },
     [],
   );
 
   const handleClick = useCallback(
     (data: { latLng: { lat: number; lng: number }; placeId: string | null }) => {
-      onMapClick({ lat: data.latLng.lat, lng: data.latLng.lng, placeId: data.placeId });
+      onMapClick?.({ lat: data.latLng.lat, lng: data.latLng.lng, placeId: data.placeId });
     },
     [zoom],
   );

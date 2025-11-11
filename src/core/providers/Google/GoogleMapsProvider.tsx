@@ -9,17 +9,12 @@ import {
   MapEvent,
 } from '@vis.gl/react-google-maps';
 import {
-  MapInfoWindowProps,
-  MapMarkerProps,
-  MapProviderContextProvider,
-  useMapProviderContext,
-} from '../MapProviderContext';
-import './GoogleMapsProvider.scss';
-import { TypeColors } from '@models';
-import {
   GoogleMapsClusterProvider,
   useGoogleMapsCluster,
 } from '@providers/Google/Cluster/GoogleMapsClusterContext';
+import { MapProviderContextProvider, useMapProviderContext } from '../MapProviderContext';
+import { MapInfoWindowProps, MapMarkerProps, PinColors } from '@models';
+import './GoogleMapsProvider.scss';
 
 const mapId = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID;
 if (!mapId) {
@@ -66,13 +61,12 @@ const GoogleInfoWindow = ({
   </div>
 );
 
-const GoogleMarker = ({ id, position, onClick, label, type, children }: MapMarkerProps) => {
-  const pinProps = TypeColors[type] || TypeColors.store;
+const GoogleMarker = ({ id, position, onClick, label, type, iconUrl }: MapMarkerProps) => {
+  const pinProps = PinColors[type] || PinColors.store;
   const { setMarkerRef } = useGoogleMapsCluster();
 
-  const {
-    enableClustering: { isEnableClustering },
-  } = useMapProviderContext();
+  const { enableClustering: { isEnableClustering } = { isEnableClustering: false } } =
+    useMapProviderContext();
 
   return (
     <AdvancedMarker
@@ -81,7 +75,20 @@ const GoogleMarker = ({ id, position, onClick, label, type, children }: MapMarke
       title={label}
       {...(isEnableClustering ? { ref: (marker) => setMarkerRef(marker, id?.toString()) } : {})}
     >
-      {children ?? <Pin {...pinProps} />}
+      {iconUrl ? (
+        <img
+          src={iconUrl}
+          alt={label}
+          style={{
+            width: 32,
+            height: 40,
+            objectFit: 'contain',
+            pointerEvents: 'none',
+          }}
+        />
+      ) : (
+        <Pin {...pinProps} />
+      )}
     </AdvancedMarker>
   );
 };

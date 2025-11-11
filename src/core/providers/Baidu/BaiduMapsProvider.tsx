@@ -1,9 +1,6 @@
 import { PropsWithChildren, useEffect } from 'react';
-import {
-  MapInfoWindowProps,
-  MapMarkerProps,
-  MapProviderContextProvider,
-} from '../MapProviderContext';
+import { MapProviderContextProvider } from '../MapProviderContext';
+import { MapInfoWindowProps, MapMarkerProps } from '@models';
 import './BaiduMapsProvider.scss';
 
 const BaiduPlaceholderInfoWindow = ({ className, children }: MapInfoWindowProps) => {

@@ -18,7 +18,7 @@
 - `src/main.tsx` bootstraps the React 18 app and global styles.
 - `src/core/` keeps provider-specific code and shared hooks (e.g. `useMapProvider`, Google/Baidu providers, clustering context).
 - `src/features/` contains reusable feature modules:
-  - `Map/` exposes `Map.Container` and `Map.POILayer` composites.
+  - `Map/` exposes `Map.Container` and `Map.POILayer` composites, primitives in `Map.Primitives` to manage markers and `Map.Utils` helpers to calculate bounds and center.
   - `Form/` renders the POC-only controls for changing center/zoom.
 - `src/db/index.tsx` provides mocked POIs (stores and drop points) consumed by `Map.POILayer`.
 - `src/models/index.tsx` centralizes shared types and theming helpers.
@@ -95,6 +95,15 @@ TypeScript paths (configured in `tsconfig.json`) allow concise imports:
 - Pulls `Marker` from the provider context so rendering stays provider-agnostic.
 - When `clustering` is true it toggles the provider clustering state; otherwise markers render individually.
 
+### `Map.Primitives.Marker`
+
+- Provider-agnostic marker primitive that accepts `id`, `type`, `position`, and optional `onClick`.
+
+### `Map.Utils`
+
+- `calculateBounds(pois: POI[])`: derives a `LatLngBounds` that fits all provided POIs.
+- `calculateBoundsCenter(bounds: LatLngBounds)`: computes the center point of given bounds
+
 ## Data & Models
 
 - `src/db/index.tsx` mocks Oysho stores and drop points across Spain for quick testing.
@@ -120,6 +129,16 @@ TypeScript paths (configured in `tsconfig.json`) allow concise imports:
 - `GoogleMarker` only attaches clustering refs when the provider marks clustering as enabled, keeping markers lightweight otherwise.
 - Baidu’s stub ignores clustering; once the real provider lands it can opt into the same contract.
 
+## Extra features
+
+- Add `TopBar` component to display buttons to:
+  - Change Pois between 2 list
+  - Change Provider between Google and Baidu
+- Custom marker icons using `iconUrl` property in Google Maps markers to differentiate between store and drop point POIs.
+
+
+![Extra Features](./assets/extra.png)
+
 ## Running Without Google Maps
 
 - If the Google script fails (invalid key, quota exceeded, network issues) the underlying Google Maps SDK renders its own failure message in the canvas.
@@ -132,6 +151,7 @@ TypeScript paths (configured in `tsconfig.json`) allow concise imports:
 - Extend map primitives (polylines, polygons, overlays) as needed.
 - Replace the experimental form with production-ready controls or extract it into dedicated showcase stories/tests.
 - Add automated tests (unit + integration) for provider selection, layer rendering, and clustering toggles.
+- Hash or encrypt API keys for improved security.
 
 ## Annex
 

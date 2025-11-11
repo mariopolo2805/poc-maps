@@ -29,6 +29,7 @@ export const POILayer = ({ pois, onPoiClick, clustering }: POILayerProps) => {
           position={{ lat: poi.lat, lng: poi.lng }}
           label={poi.label}
           type={poi.type}
+          iconUrl={poi.iconDefaultUrl}
           onClick={() => onPoiClick?.(poi)}
         />
       ))}
